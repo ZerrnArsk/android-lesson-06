@@ -10,6 +10,8 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -54,5 +56,19 @@ public class UserDataService {
             return new UserAuthenticationDto(jwtService.generateToken(archivedEntity.getUserId()));
         // 만약 비밀번호가 일치하지 않는다면, BadCredentialsException을 던집니다.
         throw new BadCredentialsException("Credentials invalid");
+    }
+     public List<String> userList() {
+        List<UserDataEntity> all = repository.findAll();
+        List<String> userIdList = new ArrayList<>();
+        for (UserDataEntity userDataEntity : all) {
+            userIdList.add(userDataEntity.getUserId());
+        }
+        return userIdList;
+    }
+
+    public void deleteUser(String userId) {
+        Optional<UserDataEntity> entity = repository.findUserDataEntityByUserId(userId);
+        UserDataEntity userDataEntity = entity.get();
+        repository.delete(userDataEntity);
     }
 }
