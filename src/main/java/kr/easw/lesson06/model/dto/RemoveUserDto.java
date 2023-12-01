@@ -1,12 +1,13 @@
 package kr.easw.lesson06.model.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RequestMapping;
+import lombok.*;
 
-@RequiredArgsConstructor
+@AllArgsConstructor
+@NoArgsConstructor
 @Getter
+@Setter
 public class RemoveUserDto {
-    private final String userId;
+    private String userId;
+
 }
